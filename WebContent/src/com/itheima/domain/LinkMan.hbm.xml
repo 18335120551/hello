@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- 创建实体类和表的映射 -->
+	<class name="com.itheima.domain.LinkMan" table="cst_linkman">
+		<!-- 配置实体类属性和表主键对应 -->
+		<id name="lkm_id" column="lkm_id">
+			<!-- 生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		<!-- 其他属性和字段对应 -->
+		<property name="lkm_name" column="lkm_name"></property>
+		<property name="lkm_gender" column="lkm_gender"></property>
+		<property name="lkm_phone" column="lkm_phone"></property>
+
+		<property name="lkm_mobile" column="lkm_mobile"></property>
+		<property name="lkm_email" column="lkm_email"></property>
+		<property name="lkm_qq" column="lkm_qq"></property>
+
+		<property name="lkm_position" column="lkm_position"></property>
+		<property name="lkm_meno" column="lkm_meno"></property>
+
+		<!-- 配置关联关系 -->
+		<!-- 
+			many-to-one标签:
+				name属性 一的一方的对象的名称
+				class属性 一的一方的类的全路径  
+				column属性 表中的外键的名称
+		  -->
+		<many-to-one name="customer" cascade="save-update,delete"
+			class="com.itheima.domain.Customer" column="lkm_cust_id" />
+	</class>
+</hibernate-mapping>

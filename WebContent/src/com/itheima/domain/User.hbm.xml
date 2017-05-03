@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- 创建实体类和表的映射 -->
+	<class name="com.itheima.domain.User" table="sys_user">
+		<!-- 配置实体类属性和表主键对应 -->
+		<id name="user_id" column="user_id">
+			<!-- 生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		<!-- 其他属性和字段对应 -->
+		<property name="user_code" column="user_code"></property>
+		<property name="user_password" column="user_password"></property>
+		<property name="user_name" column="user_name"></property>
+		
+		<property name="user_state" column="user_state"></property>
+
+		<!-- 配置关联对象 -->
+		<!-- 
+			set标签: 
+				name属性:	关联的另一方的集合的属性名称
+				table属性:	中间表的名称
+		 -->
+		<set name="roles" table="sys_user_role" cascade="save-update,delete">
+		<!-- 
+			key标签: 
+				column属性:	当前对象在中间表中的外键的名称
+		 -->
+			<key column="user_id"></key>
+			<!-- 
+				many-to-many标签:
+					class	关联另一方的类的全路径
+					column	关联的另一方在中间表的外键的名称
+			 -->
+			 <many-to-many class="com.itheima.domain.Role" column="role_id" />
+		</set>
+	</class>
+</hibernate-mapping>
+    
+    
+    

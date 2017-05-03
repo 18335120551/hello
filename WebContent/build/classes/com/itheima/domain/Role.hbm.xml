@@ -1,0 +1,36 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- 创建实体类和表的映射 -->
+	<class name="com.itheima.domain.Role" table="sys_role">
+		<!-- 配置实体类属性和表主键对应 -->
+		<id name="role_id" column="role_id">
+			<!-- 生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		<!-- 其他属性和字段对应 -->
+		<property name="role_name" column="role_name"></property>
+		<property name="role_memo" column="role_memo"></property>
+		
+		<!-- 配置关联对象 -->
+		<!-- 
+			set标签: 
+				name属性:	关联的另一方的集合的属性名称
+				table属性:	中间表的名称
+		 -->
+		<set name="users" table="sys_user_role" cascade="save-update,delete">
+		<!-- 
+			key标签: 
+				column属性:	当前对象在中间表中的外键的名称
+		 -->
+			<key column="role_id"></key>
+			<!-- 
+				many-to-many标签:
+					class	关联另一方的类的全路径
+					column	关联的另一方在中间表的外键的名称
+			 -->
+			 <many-to-many class="com.itheima.domain.User" column="user_id" />
+		</set>
+	</class>
+</hibernate-mapping>

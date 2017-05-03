@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 开启动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<package name="CRM" namespace="/" extends="struts-default">
+		<!-- 定义拦截器 -->
+		<interceptors>
+			<interceptor name="privilegeInterceptor"
+				class="com.itheima.web.interceptor.PrivilegeInterceptor"></interceptor>
+		</interceptors>
+
+		<!-- 全局结果页面 -->
+		<global-results>
+			<result name="success">/index.jsp</result>
+			<result name="login">login.jsp</result>
+		</global-results>
+
+		<!-- 1.用户模块 -->
+		<action name="user_*" class="com.itheima.web.action.UserAction"
+			method="{1}">
+			<!-- 配置拦截器 -->
+			<interceptor-ref name="privilegeInterceptor">
+				<!-- 配置参数是action的login方法不被拦截 -->
+				<param name="excludeMethods">login</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+
+		<!-- 2.客户模块 -->
+		<action name="customer_*" class="com.itheima.web.action.CustomerAction"
+			method="{1}">
+			<!-- 查询客户列表 -->
+			<result name="findAll">/jsp/customer/list.jsp</result>
+			<!-- 添加新客户 -->
+			<result name="saveUI">/jsp/customer/add.jsp</result>
+			<result name="saveSuccess" type="redirect">customer_findAll.action
+			</result>
+			<!-- 配置拦截器 -->
+			<interceptor-ref name="privilegeInterceptor">
+				<!-- 配置参数是action的login方法不被拦截 -->
+				<param name="excludeMethods">login</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+	</package>
+
+</struts>
